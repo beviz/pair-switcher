@@ -1,0 +1,57 @@
+<% @breadcrumb = [['Home']] %>
+
+<div>
+  <div class="row">
+    <div class="col">
+      <%= link_to 'Let\'s Pair!', [:pair], data: { method: :post, confirm: 'Are you sure?' }, class: 'btn btn-success px-5' %>
+
+      <% if PairHistory.any? %>
+        <%= link_to 'Rollback', [:rollback], data: { method: :post, confirm: 'Are you sure?' }, class: 'btn btn-secondary px-5' %>
+      <% end %>
+    </div>
+
+    <div class="col-auto">
+      <%= form_for Member.new, html: { class: 'form-inline' } do |f| %>
+      <div class="form-row align-items-center">
+        <div class="col-auto" style="max-width: 200px">
+          <%= f.text_field :name, autofocus: true, class: 'form-control', required: true %>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-secondary">Add Member</button>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+
+  <table class='table mt-2 table-striped table-hover'>
+    <thead class='thead-dark'>
+      <th>#</th>
+      <th>A</th>
+      <th>B</th>
+      <th>Paired at</th>
+    </thead>
+    <tbody>
+      <% last_paired_at = PairHistory.last_paired_at %>
+      <% Member.recent.with_latest_pair.each_with_index do |member, index| %>
+        <% is_latest_paired = member.latest_pair_history&.paired_at == last_paired_at %>
+        <tr style="<%= 'opacity: 0.3' unless is_latest_paired %>">
+          <td><%= index + 1 %></td>
+          <td><%= link_to member.name, member %></td>
+          <td>
+            <% target = member.latest_pair_history&.target %>
+            <% if target %>
+              <%= link_to target.name, target %>
+            <% else %>
+              -
+            <% end %>
+          </td>
+          <td>
+            <% at = member.latest_pair_history&.created_at %>
+            <%= at ? l(member.latest_pair_history&.created_at, format: :short) : '-' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

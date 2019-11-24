@@ -1,15 +1,39 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PairSwitcher</title>
+    <title>Pair Switcher</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container-fluid">
+      <% flash.keys.each do |key| %>
+        <div class="alert alert-info mt-3"><%= flash[key] %></div>
+      <% end %>
+
+      <nav aria-label="breadcrumb" class="mt-3">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <%= link_to 'Pair Switcher', :root %>
+          </li>
+          <% @breadcrumb ||= []  %>
+          <% @breadcrumb.each_with_index do |bc, index| %>
+            <li class="breadcrumb-item <%= index == @breadcrumb.length %>" aria-current="page">
+              <% if bc[1] %>
+                <%= link_to bc[0], bc[1] %>
+              <% else %>
+              <%= bc[0] %>
+            <% end %>
+          </li>
+          <% end %>
+        </ol>
+      </nav>
+
+      <%= yield %>
+    </div>
   </body>
 </html>

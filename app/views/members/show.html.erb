@@ -1,0 +1,24 @@
+<% @breadcrumb = [['Members'], [@member.name] ] %>
+
+<h4 class="my-3">Pair History</h4>
+
+<table class='table mt-2 table-striped table-hover'>
+  <thead class='thead-dark'>
+    <th>#</th>
+    <th>A</th>
+    <th>B</th>
+    <th>Paired at</th>
+  </thead>
+  <tbody>
+    <% @member.pair_histories.recent_paired.includes(:target).each_with_index do |history, index| %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= @member.name %></td>
+        <td><%= link_to history.target.name, history.target %></td>
+        <td>
+          <%= l history.paired_at, format: :short %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
