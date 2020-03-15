@@ -10,3 +10,9 @@ en:
       destroy:
         notice: '%{resource_name} was successfully destroyed.'
         alert: '%{resource_name} could not be destroyed.'
+
+    members:
+      disable:
+        notice: '%{resource_name} was successfully disabled.'
+      enable:
+        notice: '%{resource_name} was successfully enabled.'

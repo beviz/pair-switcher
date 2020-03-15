@@ -13,7 +13,8 @@
   <body>
     <div class="container-fluid">
       <% flash.keys.each do |key| %>
-        <div class="alert alert-info mt-3"><%= flash[key] %></div>
+        <% flash_info_map = { 'notice' => 'info', 'alert' => 'warning' }%>
+        <div class="alert alert-<%= flash_info_map[key] %> mt-3"><%= flash[key] %></div>
       <% end %>
 
       <nav aria-label="breadcrumb" class="mt-3">

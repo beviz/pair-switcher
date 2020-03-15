@@ -1,1 +1,6 @@
 @import 'bootstrap/dist/css/bootstrap.css';
+
+table tbody tr {
+  .actions { visibility: hidden;}
+  &:hover .actions { visibility: visible; }
+}

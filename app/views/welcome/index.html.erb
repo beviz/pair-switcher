@@ -30,15 +30,18 @@
       <th>A</th>
       <th>B</th>
       <th>Paired at</th>
+      <th></th>
     </thead>
     <tbody>
       <% last_paired_at = PairHistory.last_paired_at %>
-      <% Member.recent.with_latest_pair.each_with_index do |member, index| %>
+      <% Member.available_first.recent.with_latest_pair.each_with_index do |member, index| %>
         <% is_latest_paired = member.latest_pair_history&.paired_at == last_paired_at %>
-        <tr style="<%= 'opacity: 0.3' unless is_latest_paired %>">
+        <tr style="<%= 'opacity: 0.3' if member.disabled? %>">
           <td><%= index + 1 %></td>
-          <td><%= link_to member.name, member %></td>
           <td>
+            <%= link_to member.name, member %>
+          </td>
+          <td style="<%= 'text-decoration-line: line-through;' unless is_latest_paired %>">
             <% target = member.latest_pair_history&.target %>
             <% if target %>
               <%= link_to target.name, target %>
@@ -46,9 +49,19 @@
               -
             <% end %>
           </td>
-          <td>
+          <td class='<%= 'text-warning font-weight-light' unless is_latest_paired %> '>
             <% at = member.latest_pair_history&.created_at %>
             <%= at ? l(member.latest_pair_history&.created_at, format: :short) : '-' %>
+          </td>
+          <td>
+            <div class="actions">
+              <% if member.disabled? %>
+                <%= link_to 'Enable', [:enable, member], data: { method: :put, confirm: 'Are you sure?' } %>
+              <% else %>
+                <%= link_to 'Disable', [:disable, member], data: { method: :put, confirm: 'Are you sure?' } %>
+              <% end %>
+              <%= link_to 'Remove', member, data: { method: :delete, confirm: 'Are you sure?' } %>
+            </div>
           </td>
         </tr>
       <% end %>

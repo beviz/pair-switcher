@@ -10,6 +10,21 @@ class MembersController < ApplicationController
   def show
   end
 
+  def disable
+    @member.disable
+    respond_with @member, location: -> { root_path }
+  end
+
+  def enable
+    @member.enable
+    respond_with @member, location: -> { root_path }
+  end
+
+  def destroy
+    @member.destroy
+    respond_with @member, location: -> { root_path }
+  end
+
 protected
 
   def resource_params
