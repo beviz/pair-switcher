@@ -3,15 +3,15 @@
 <div>
   <div class="row">
     <div class="col">
-      <%= link_to 'Let\'s Pair!', [:pair], data: { method: :post, confirm: 'Are you sure?' }, class: 'btn btn-success px-5' %>
+      <%= link_to 'Let\'s Pair!', [:pair, @team], data: { method: :post, confirm: 'Are you sure?' }, class: 'btn btn-success px-5' %>
 
       <% if PairHistory.any? %>
-        <%= link_to 'Rollback', [:rollback], data: { method: :post, confirm: 'Are you sure?' }, class: 'btn btn-secondary px-5' %>
+        <%= link_to 'Rollback', [:rollback, @team], data: { method: :post, confirm: 'Are you sure?' }, class: 'btn btn-secondary px-5' %>
       <% end %>
     </div>
 
     <div class="col-auto">
-      <%= form_for Member.new, html: { class: 'form-inline' } do |f| %>
+      <%= form_for [@team, Member.new], html: { class: 'form-inline' } do |f| %>
       <div class="form-row align-items-center">
         <div class="col-auto" style="max-width: 200px">
           <%= f.text_field :name, autofocus: true, class: 'form-control', required: true %>
@@ -34,17 +34,17 @@
     </thead>
     <tbody>
       <% last_paired_at = PairHistory.last_paired_at %>
-      <% Member.available_first.recent.with_latest_pair.each_with_index do |member, index| %>
+      <% @team.members.available_first.recent.with_latest_pair.each_with_index do |member, index| %>
         <% is_latest_paired = member.latest_pair_history&.paired_at == last_paired_at %>
         <tr style="<%= 'opacity: 0.3' if member.disabled? %>">
           <td><%= index + 1 %></td>
           <td>
-            <%= link_to member.name, member %>
+            <%= link_to member.name, [@team, member] %>
           </td>
           <td style="<%= 'text-decoration-line: line-through;' unless is_latest_paired %>">
             <% target = member.latest_pair_history&.target %>
             <% if target %>
-              <%= link_to target.name, target %>
+              <%= link_to target.name, [@team, target] %>
             <% else %>
               -
             <% end %>
@@ -56,11 +56,11 @@
           <td>
             <div class="actions">
               <% if member.disabled? %>
-                <%= link_to 'Enable', [:enable, member], data: { method: :put, confirm: 'Are you sure?' } %>
+                <%= link_to 'Enable', [:enable, @team, member], data: { method: :put, confirm: 'Are you sure?' } %>
               <% else %>
-                <%= link_to 'Disable', [:disable, member], data: { method: :put, confirm: 'Are you sure?' } %>
+                <%= link_to 'Disable', [:disable, @team, member], data: { method: :put, confirm: 'Are you sure?' } %>
               <% end %>
-              <%= link_to 'Remove', member, data: { method: :delete, confirm: 'Are you sure?' } %>
+              <%= link_to 'Remove', [@team, member], data: { method: :delete, confirm: 'Are you sure?' } %>
             </div>
           </td>
         </tr>

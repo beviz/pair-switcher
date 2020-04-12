@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_15_100310) do
+ActiveRecord::Schema.define(version: 2020_04_12_094919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2020_03_15_100310) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "disabled_at"
+    t.integer "team_id"
   end
 
   create_table "pair_histories", force: :cascade do |t|
@@ -30,6 +31,13 @@ ActiveRecord::Schema.define(version: 2020_03_15_100310) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["member_id"], name: "index_pair_histories_on_member_id"
     t.index ["target_id"], name: "index_pair_histories_on_target_id"
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.string "token"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["token"], name: "index_teams_on_token"
   end
 
   add_foreign_key "pair_histories", "members", column: "target_id"

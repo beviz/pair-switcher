@@ -14,7 +14,7 @@
       <tr>
         <td><%= index + 1 %></td>
         <td><%= @member.name %></td>
-        <td><%= link_to history.target.name, history.target %></td>
+        <td><%= link_to history.target.name, [@team, history.target] %></td>
         <td>
           <%= l history.paired_at, format: :short %>
         </td>

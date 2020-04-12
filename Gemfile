@@ -40,7 +40,7 @@ group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
-  gem "rspec-rails", "~> 3.9"
+  gem "rspec-rails", "~> 4.0.0"
   gem "pry-rails", "~> 0.3.9"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   # gem 'spring'
@@ -48,12 +48,17 @@ group :development do
 end
 
 gem "pry-nav", "~> 0.3.0"
+
 group :test do
+  gem "shoulda-matchers", "~> 4.3"
+  gem "rails-controller-testing", "~> 1.0"
+  gem "rspec-do_action", "~> 0.0.7"
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+  gem 'simplecov', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

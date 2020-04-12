@@ -1,10 +1,10 @@
 class MembersController < ApplicationController
-  load_resource
+  load_and_authorize_resource :team, find_by: :token
+  load_and_authorize_resource through: :team
 
   def create
-    @member = Member.find_or_create_by(name: params[:member][:name])
-    respond_with @member, location: -> { root_path },
-                          action: -> { redirect_to :root }
+    @member = @team.members.find_or_create_by(name: params[:member][:name])
+    respond_with @member, location: @team
   end
 
   def show
@@ -12,17 +12,17 @@ class MembersController < ApplicationController
 
   def disable
     @member.disable
-    respond_with @member, location: -> { root_path }
+    respond_with @member, location: root_path
   end
 
   def enable
     @member.enable
-    respond_with @member, location: -> { root_path }
+    respond_with @member, location: root_path
   end
 
   def destroy
     @member.destroy
-    respond_with @member, location: -> { root_path }
+    respond_with @member, location: root_path
   end
 
 protected

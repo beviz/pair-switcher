@@ -1,17 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Assigner do
+  let(:team) { create :team }
+
   describe '#assign' do
     let(:result) { Assigner.assign(members) }
 
     context 'no history' do
-      let(:members) { create_list :member, 6 }
+      let(:members) { create_list :member, 6, team: team }
       it { expect(result.length).to be(3)
            expect(result.flatten - members).to be_empty }
     end
 
     context 'with history' do
-      let(:members) { create_list :member, 20 }
+      let(:members) { create_list :member, 20, team: team }
       before do
         sources, targets = members.shuffle.each_slice(10).to_a
         sources.each_with_index do |source, index|

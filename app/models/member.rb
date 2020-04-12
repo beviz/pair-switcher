@@ -5,6 +5,7 @@ class Member < ApplicationRecord
 
   has_one :latest_pair_history, -> { recent_paired }, class_name: PairHistory.to_s, foreign_key: :member_id
   has_one :latest_pair, through: :latest_pair_history, source: :target
+  belongs_to :team
 
   validates :name, presence: true, uniqueness: true
 
