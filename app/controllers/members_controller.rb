@@ -12,17 +12,17 @@ class MembersController < ApplicationController
 
   def disable
     @member.disable
-    respond_with @member, location: root_path
+    respond_with @member, location: @team
   end
 
   def enable
     @member.enable
-    respond_with @member, location: root_path
+    respond_with @member, location: @team
   end
 
   def destroy
     @member.destroy
-    respond_with @member, location: root_path
+    respond_with @member, location: @team
   end
 
 protected

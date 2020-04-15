@@ -17,8 +17,7 @@ RSpec.describe MembersController, type: :controller do
 
     context 'valid attributes' do
       let(:member_params) { attributes_for(:member) }
-      it { should respond_with(:redirect)
-           should redirect_to(assigns[:team]) }
+      it { should redirect_to(team) }
     end
 
     context 'invalid attributes' do
@@ -28,13 +27,13 @@ RSpec.describe MembersController, type: :controller do
   describe 'POST #disable' do
     let(:member) { create :member, team: team }
     action { post :disable, params: { team_id: team.token, id: member.id } }
-    it { should respond_with(:redirect) }
+    it { should redirect_to(team) }
   end
 
   describe 'POST #enable' do
     let(:member) { create :member, team: team }
     action { post :enable, params: { team_id: team.token, id: member.id } }
-    it { should respond_with(:redirect) }
+    it { should redirect_to(team) }
   end
 
   describe 'POST #destroy' do
@@ -42,6 +41,6 @@ RSpec.describe MembersController, type: :controller do
     let(:pair) { create :member, team: team }
     before { create :pair_history, member: member, target: pair }
     action { delete :destroy, params: { team_id: team.token, id: member.id } }
-    it { should respond_with(:redirect) }
+    it { should redirect_to(team) }
   end
 end
