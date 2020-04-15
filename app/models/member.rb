@@ -7,7 +7,7 @@ class Member < ApplicationRecord
   has_one :latest_pair, through: :latest_pair_history, source: :target
   belongs_to :team
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: { scope: :team_id }
 
   scope :available, -> { where(disabled_at: nil) }
   scope :available_first, -> { order('disabled_at DESC NULLS FIRST') }
