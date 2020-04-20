@@ -12,3 +12,5 @@ require("jquery")
 require('bootstrap/dist/js/bootstrap')
 require('../stylesheets/application.scss')
 
+
+import "controllers"
