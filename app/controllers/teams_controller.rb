@@ -23,7 +23,7 @@ class TeamsController < ApplicationController
   end
 
   def rollback
-    if PairHistory.rollback!
+    if @team.pair_histories.rollback!
       flash[:notice] = "Rollback successfully"
     else
       flash[:alert] = "No history for rollback"
