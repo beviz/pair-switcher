@@ -14,7 +14,7 @@ RSpec.describe TeamsController, type: :controller do
   end
 
   describe 'POST #create' do
-    action { post :create }
+    action { post :create, params: { team: attributes_for(:team) } }
     it { should respond_with(:redirect)
          should redirect_to(assigns[:team]) }
   end

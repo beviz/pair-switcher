@@ -31,4 +31,8 @@ class TeamsController < ApplicationController
 
     redirect_to @team
   end
+
+  def team_params
+    params.fetch(:team, {}).permit(:name)
+  end
 end
