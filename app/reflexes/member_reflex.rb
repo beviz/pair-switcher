@@ -21,9 +21,10 @@ class MemberReflex < ApplicationReflex
   #
   # Learn more at: https://docs.stimulusreflex.com
 
-  def create
-    @team = Team.find(element.dataset['team-id'])
-    binding.pry
+  def create(query)
+    params = to_params(query)
+
+    @team = Team.find(params[:team_id])
     @team.members.find_or_create_by(name: params[:member][:name])
   end
 
@@ -37,5 +38,11 @@ class MemberReflex < ApplicationReflex
     @team = Team.find(element.dataset['team-id'])
     member = @team.members.find(element.dataset[:id])
     member.disable
+  end
+
+  def destroy
+    @team = Team.find(element.dataset['team-id'])
+    member = @team.members.find(element.dataset[:id])
+    member.destroy
   end
 end

@@ -12,7 +12,7 @@
   </head>
 
   <body>
-    <div class="container-fluid">
+    <div class="container-fluid" data-controller="application">
       <% flash.keys.each do |key| %>
         <% flash_info_map = { 'notice' => 'info', 'alert' => 'warning' }%>
         <div class="alert alert-<%= flash_info_map[key] %> mt-3"><%= flash[key] %></div>

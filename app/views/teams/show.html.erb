@@ -11,9 +11,10 @@
     </div>
 
     <div class="col-auto">
-      <%= form_for [@team, Member.new], html: { class: 'form-inline' } do |f| %>
+      <%= form_for [@team, Member.new], html: { class: 'form-inline', data: { controller: 'member', action: 'submit->member#create' } } do |f| %>
         <div class="form-row align-items-center">
           <div class="col-auto" style="max-width: 200px">
+            <%= hidden_field_tag :team_id, @team.id %>
             <%= f.text_field :name, autofocus: true, class: 'form-control', required: true %>
           </div>
           <div class="col-auto">
@@ -60,7 +61,7 @@
               <% else %>
                 <%= link_to 'Disable', '#', data: { reflex: 'click->MemberReflex#disable', 'team-id': @team.id, 'id': member.id } %>
               <% end %>
-              <%= link_to 'Remove', [@team, member], data: { method: :delete, confirm: 'Are you sure?' } %>
+              <%= link_to 'Remove', [@team, member], data: { method: :delete, confirm: 'Are you sure?', reflex: 'click->MemberReflex#destroy', 'team-id': @team.id, 'id': member.id } %>
             </div>
           </td>
         </tr>

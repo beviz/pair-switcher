@@ -10,5 +10,11 @@ class ApplicationReflex < StimulusReflex::Reflex
   #
   # Learn more at: https://docs.stimulusreflex.com
 
-  delegate :params, to: :request
+  # def params
+  #   @params ||= Rack::Utils.parse_nested_query(element.dataset[:params])
+  # end
+
+  def to_params(query)
+    Rack::Utils.parse_nested_query(query).with_indifferent_access
+  end
 end

@@ -1,9 +1,20 @@
 import ApplicationController from './application_controller'
+import StimulusReflex from 'stimulus_reflex'
+import $ from 'jquery'
 
 /* This is the custom StimulusReflex controller for MemberReflex.
  * Learn more at: https://docs.stimulusreflex.com
  */
 export default class extends ApplicationController {
+  connect() {
+    StimulusReflex.register(this)
+  }
+
+  create(event) {
+    event.preventDefault()
+    const params = $(event.target).serialize()
+    this.stimulate('MemberReflex#create', params).then(() => event.target.reset())
+  }
   /* Reflex specific lifecycle methods.
    * Use methods similar to this example to handle lifecycle concerns for a specific Reflex method.
    * Using the lifecycle is optional, so feel free to delete these stubs if you don't need them.
@@ -23,7 +34,7 @@ export default class extends ApplicationController {
    */
 
   // beforeUpdate(element, reflex) {
-  //  element.innerText = 'Updating...'
+  //   element.innerText = 'Updating...'
   // }
 
   // updateSuccess(element, reflex) {
