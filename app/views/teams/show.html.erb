@@ -33,7 +33,7 @@
       <th></th>
     </thead>
     <tbody>
-      <% last_paired_at = PairHistory.last_paired_at %>
+      <% last_paired_at = @team.pair_histories.last_paired_at %>
       <% @team.members.available_first.recent.with_latest_pair.each_with_index do |member, index| %>
         <% is_latest_paired = member.latest_pair_history&.paired_at == last_paired_at %>
         <tr style="<%= 'opacity: 0.3' if member.disabled? %>">
